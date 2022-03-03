@@ -1,9 +1,11 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from localflavor.us.models import USStateField, USZipCodeField
+from datetime import datetime
 
-class Note(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+class ContactManager(models.Manager):
+    def get_by_natural_key(self, first_name, last_name):
+        return self.get(first_name=first_name, last_name=last_name)
 
 class Contact(models.Model):
     phone_regex = RegexValidator(
@@ -16,11 +18,14 @@ class Contact(models.Model):
                                     validators=[phone_regex],
                                     null=True,
                                     blank=True)
-    birthday = models.DateTimeField(null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
     address_1 = models.CharField(max_length=255, null=True, blank=True)
     address_2 = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)    
     state = USStateField(null=True, blank=True)
     zip_code = USZipCodeField(null=True, blank=True)
-    note = models.ForeignKey(Note)
-
+    
+class Note(models.Model):
+    text_field = models.CharField(max_length=300, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(Contact, null=True, on_delete=models.CASCADE)
