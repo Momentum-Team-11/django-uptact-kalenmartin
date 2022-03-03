@@ -13,5 +13,6 @@ class ContactForm(forms.ModelForm):
             'state',
             'zip_code',
             'phone_number',
+            'birthday',
             'email',
         ]

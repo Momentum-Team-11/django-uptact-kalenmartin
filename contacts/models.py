@@ -14,8 +14,9 @@ class Contact(models.Model):
                                     validators=[phone_regex],
                                     null=True,
                                     blank=True)
+    birthday = models.DateTimeField(null=True, blank=True)
     address_1 = models.CharField(max_length=255, null=True, blank=True)
     address_2 = models.CharField(max_length=255, null=True, blank=True)
-    city = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)    
     state = USStateField(null=True, blank=True)
     zip_code = USZipCodeField(null=True, blank=True)
