@@ -11,6 +11,7 @@
     <h2>{{ contact.name }}</h2>
 
     <div class="flex">
+
       <div class="pr2"><i class="icofont-location-pin"></i></div>
       <div>
         {{ contact.address_1 }}<br />
@@ -30,7 +31,7 @@
 
     {% if contact.birthday %}
     <div class="flex">
-      <div class="pr2"><i class="icofont-birthday-cake"></i></div>
+      <div class="pr2"><i class="icofont-iu-birthday-cake"></i></div>
       <div>{{ contact.birthday }}</div>
     </div>
     {% endif %}
@@ -42,11 +43,13 @@
     </div>
     {% endif %}
 
+    <div>{{ note.id }}</div>
     <p>
       <a href="{% url 'edit_contact' pk=contact.pk %}">Edit Contact</a><br>    
       <a class="red" href="{% url 'delete_contact' pk=contact.pk %}">Delete Contact</a>
     </p>
-  </div>
+    
   {% endfor %}
+</div>
 </div>  
 {% endblock %}

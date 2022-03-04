@@ -3,16 +3,13 @@ from django.core.validators import RegexValidator
 from localflavor.us.models import USStateField, USZipCodeField
 from datetime import datetime
 
-class ContactManager(models.Manager):
-    def get_by_natural_key(self, first_name, last_name):
-        return self.get(first_name=first_name, last_name=last_name)
 
 class Contact(models.Model):
     phone_regex = RegexValidator(
         regex=r'^\+?\d{10}$',
         message="Phone number must be entered in the format: '+9999999999'.")
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=300)
     email = models.EmailField(null=True, blank=True)
     phone_number = models.CharField(max_length=11,
                                     validators=[phone_regex],
@@ -25,7 +22,16 @@ class Contact(models.Model):
     state = USStateField(null=True, blank=True)
     zip_code = USZipCodeField(null=True, blank=True)
     
+    def __str__(self):
+        return self.name
+    
 class Note(models.Model):
-    text_field = models.CharField(max_length=300, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    creator = models.ForeignKey(Contact, null=True, on_delete=models.CASCADE)
+    text = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=datetime.now, null=True)
+    # creator = models.CharField(max_length=20, null=True)
+    contact = models.ForeignKey(Contact, null=False, on_delete=models.CASCADE, related_name="notes", null=True)
+    
+    
+    def __str__(self):
+        return self.text
+    

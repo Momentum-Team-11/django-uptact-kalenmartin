@@ -13,12 +13,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='note',
-            name='creator',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='contacts.contact'),
+            name='contact',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='notes', to='contacts.contact'),
         ),
         migrations.AddField(
             model_name='note',
-            name='text_field',
+            name='creator',
             field=models.CharField(blank=True, max_length=300, null=True),
         ),
     ]
